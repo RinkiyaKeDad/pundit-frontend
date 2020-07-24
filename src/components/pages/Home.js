@@ -25,22 +25,6 @@ export default function Home() {
             <PunCard pun={pun} />
           </Grid>
         ))}
-
-      {/*<Grid item xs={12} sm={4}>
-        <PunCard />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <PunCard />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <PunCard />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <PunCard />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <PunCard />
-        </Grid>*/}
     </Grid>
   );
 }

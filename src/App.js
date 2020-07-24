@@ -51,8 +51,8 @@ function App() {
               <Header />
             </Grid>
             <Grid item container>
-              <Grid item xs={0} sm={2} />
-              <Grid item xs={12} sm={8}>
+              <Grid item xs={1} sm={2} />
+              <Grid item xs={11} sm={8}>
                 <Switch>
                   <Route path='/' component={Home} exact />
                   <Route path='/login' component={Login} />
