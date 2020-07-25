@@ -14,14 +14,16 @@ const useStyles = makeStyles(() => ({
 export default function Header() {
   const classes = useStyles();
   return (
-    <AppBar position='static'>
+    <AppBar color='primary' position='static'>
       <Toolbar>
         <Link
           style={{ textDecoration: 'none' }}
           className={classes.typographyStyles}
           to='/'
         >
-          <Typography variant='h4'>PunDit</Typography>
+          <Typography color='secondary' variant='h4'>
+            PunDit
+          </Typography>
         </Link>
 
         <AuthOptions />

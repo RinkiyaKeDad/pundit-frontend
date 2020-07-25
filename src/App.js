@@ -2,14 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import Axios from 'axios';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 
+import theme from './components/layout/theme';
 import UserContext from './context/UserContext';
 import Header from './components/layout/Header';
 import Home from './components/pages/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
+const useStyles = makeStyles({
+  verticalMargin: {
+    marginTop: '2rem',
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '2rem',
+    },
+  },
+});
+
 function App() {
+  const classes = useStyles();
+
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
@@ -44,26 +58,28 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <UserContext.Provider value={{ userData, setUserData }}>
-          <Grid container direction='column' spacing={4}>
-            <Grid item>
-              <Header />
-            </Grid>
-            <Grid item container>
-              <Grid item xs={1} sm={2} />
-              <Grid item xs={11} sm={8}>
-                <Switch>
-                  <Route path='/' component={Home} exact />
-                  <Route path='/login' component={Login} />
-                  <Route path='/register' component={Register} />
-                </Switch>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <UserContext.Provider value={{ userData, setUserData }}>
+            <Grid container direction='column'>
+              <Grid item>
+                <Header />
               </Grid>
-              <Grid item xs={0} sm={2} />
+              <Grid item container className={classes.verticalMargin}>
+                <Grid item xs={1} sm={2} />
+                <Grid item xs={10} sm={8}>
+                  <Switch>
+                    <Route path='/' component={Home} exact />
+                    <Route path='/login' component={Login} />
+                    <Route path='/register' component={Register} />
+                  </Switch>
+                </Grid>
+                <Grid item xs={1} sm={2} />
+              </Grid>
             </Grid>
-          </Grid>
-        </UserContext.Provider>
-      </BrowserRouter>
+          </UserContext.Provider>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   );
 }
