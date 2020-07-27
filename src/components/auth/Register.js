@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+export default function Register() {
   const classes = useStyles();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
