@@ -11,6 +11,7 @@ import Header from './components/layout/Header';
 import Home from './components/pages/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import CreatePun from './components/pages/CreatePun';
 
 const useStyles = makeStyles({
   verticalMargin: {
@@ -72,6 +73,7 @@ function App() {
                     <Route path='/' component={Home} exact />
                     <Route path='/login' component={Login} />
                     <Route path='/register' component={Register} />
+                    <Route path='/cap' component={CreatePun} />
                   </Switch>
                 </Grid>
                 <Grid item xs={1} sm={2} />

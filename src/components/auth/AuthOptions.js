@@ -10,6 +10,8 @@ export default function Authoptions() {
   const history = useHistory();
   const register = () => history.push('/register');
   const login = () => history.push('/login');
+  const createPun = () => history.push('/cap');
+
   const logout = () => {
     setUserData({
       token: undefined,
@@ -20,9 +22,14 @@ export default function Authoptions() {
   return (
     <div>
       {userData.user ? (
-        <Button color='secondary' onClick={logout}>
-          Log out
-        </Button>
+        <>
+          <Button color='secondary' onClick={createPun}>
+            Create
+          </Button>
+          <Button color='secondary' onClick={logout}>
+            Log out
+          </Button>
+        </>
       ) : (
         <>
           <Button color='secondary' onClick={register}>
