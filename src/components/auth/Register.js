@@ -5,6 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +16,10 @@ import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 
 import UserContext from '../../context/UserContext';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,9 +47,19 @@ export default function Register() {
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
   const [displayName, setDisplayName] = useState();
+  const [error, setError] = useState();
+  const [open, setOpen] = useState(false);
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const submit = async e => {
     e.preventDefault();
@@ -62,7 +78,7 @@ export default function Register() {
       localStorage.setItem('auth-token', loginRes.data.token);
       history.push('/');
     } catch (err) {
-      console.log(err);
+      err.response.data.msg && setError(err.response.data.msg) && setOpen(true);
     }
   };
 
@@ -150,6 +166,11 @@ export default function Register() {
             </Grid>
           </Grid>
         </form>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity='error'>
+            This is a success message!
+          </Alert>
+        </Snackbar>
       </div>
     </Container>
   );
