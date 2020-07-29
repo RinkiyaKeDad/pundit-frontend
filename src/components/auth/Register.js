@@ -47,7 +47,7 @@ export default function Register() {
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
   const [displayName, setDisplayName] = useState();
-  const [error, setError] = useState();
+  const [error, setError] = useState(undefined);
   const [open, setOpen] = useState(false);
 
   const { setUserData } = useContext(UserContext);
@@ -58,7 +58,8 @@ export default function Register() {
       return;
     }
 
-    setOpen(false);
+    setError(undefined);
+    //setOpen(false);
   };
 
   const submit = async e => {
@@ -160,15 +161,15 @@ export default function Register() {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link href='/login' variant='body2'>
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
         </form>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity='error'>
-            This is a success message!
+            {error}
           </Alert>
         </Snackbar>
       </div>
