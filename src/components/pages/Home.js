@@ -21,7 +21,7 @@ export default function Home() {
     <Grid container spacing={4}>
       {puns &&
         puns.map((pun, index) => (
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} key={index}>
             <PunCard pun={pun} />
           </Grid>
         ))}

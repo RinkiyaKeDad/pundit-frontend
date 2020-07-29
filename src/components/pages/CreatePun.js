@@ -11,10 +11,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,9 +47,21 @@ const useStyles = makeStyles(theme => ({
 
 export default function Login() {
   const [content, setContent] = useState();
+  const [error, setError] = useState(undefined);
+
   const classes = useStyles();
   const { userData } = useContext(UserContext);
   const history = useHistory();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setError(undefined);
+    //setOpen(false);
+  };
+
   const submit = async e => {
     e.preventDefault();
     try {
@@ -60,7 +78,7 @@ export default function Login() {
 
       history.push('/');
     } catch (err) {
-      console.log(err);
+      err.response.data.msg && setError(err.response.data.msg);
     }
   };
 
@@ -95,6 +113,11 @@ export default function Login() {
             Create
           </Button>
         </form>
+        <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity='error'>
+            {error}
+          </Alert>
+        </Snackbar>
       </div>
     </Container>
   );
