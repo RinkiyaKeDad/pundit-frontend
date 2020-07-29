@@ -48,7 +48,6 @@ export default function Register() {
   const [passwordCheck, setPasswordCheck] = useState();
   const [displayName, setDisplayName] = useState();
   const [error, setError] = useState(undefined);
-  const [open, setOpen] = useState(false);
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
@@ -79,7 +78,7 @@ export default function Register() {
       localStorage.setItem('auth-token', loginRes.data.token);
       history.push('/');
     } catch (err) {
-      err.response.data.msg && setError(err.response.data.msg) && setOpen(true);
+      err.response.data.msg && setError(err.response.data.msg);
     }
   };
 
@@ -162,7 +161,7 @@ export default function Register() {
           <Grid container justify='flex-end'>
             <Grid item>
               <Link href='/login' variant='body2'>
-                Already have an account? Sign in
+                Already have an account? Login
               </Link>
             </Grid>
           </Grid>

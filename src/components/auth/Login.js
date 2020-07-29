@@ -10,11 +10,17 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />;
+}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -39,9 +45,21 @@ const useStyles = makeStyles(theme => ({
 export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState(undefined);
+
   const classes = useStyles();
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setError(undefined);
+    //setOpen(false);
+  };
+
   const submit = async e => {
     e.preventDefault();
     try {
@@ -57,7 +75,7 @@ export default function Login() {
       localStorage.setItem('auth-token', loginRes.data.token);
       history.push('/');
     } catch (err) {
-      console.log(err);
+      err.response.data.msg && setError(err.response.data.msg);
     }
   };
 
@@ -116,12 +134,17 @@ export default function Login() {
               </Link>
             </Grid>*/}
             <Grid item>
-              <Link href='#' variant='body2'>
-                {"Don't have an account? Sign Up"}
+              <Link href='/register' variant='body2'>
+                {"Don't have an account? Register"}
               </Link>
             </Grid>
           </Grid>
         </form>
+        <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity='error'>
+            {error}
+          </Alert>
+        </Snackbar>
       </div>
     </Container>
   );
