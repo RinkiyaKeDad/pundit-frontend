@@ -39,14 +39,17 @@ function App() {
         token = '';
       }
       const tokenRes = await Axios.post(
-        'http://localhost:5000/users/tokenIsValid',
+        process.env.REACT_APP_BACKEND_URL + '/users/tokenIsValid',
         null,
         { headers: { 'x-auth-token': token } }
       );
       if (tokenRes.data) {
-        const userRes = await Axios.get('http://localhost:5000/users/', {
-          headers: { 'x-auth-token': token },
-        });
+        const userRes = await Axios.get(
+          process.env.REACT_APP_BACKEND_URL + '/users/',
+          {
+            headers: { 'x-auth-token': token },
+          }
+        );
         setUserData({
           token,
           user: userRes.data,

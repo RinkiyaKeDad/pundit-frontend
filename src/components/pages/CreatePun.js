@@ -67,7 +67,7 @@ export default function Login() {
     try {
       const createdPun = { content };
       const punRes = await Axios.post(
-        'http://localhost:5000/puns/',
+        process.env.REACT_APP_BACKEND_URL + '/puns/',
         createdPun,
         {
           headers: {

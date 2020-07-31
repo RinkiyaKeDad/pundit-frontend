@@ -8,7 +8,9 @@ export default function Home() {
   useEffect(() => {
     const fetchAllPuns = async () => {
       try {
-        const response = await Axios.get(`http://localhost:5000/puns/all/`);
+        const response = await Axios.get(
+          process.env.REACT_APP_BACKEND_URL + `/puns/all/`
+        );
         console.log(response.data);
         setPuns(response.data);
       } catch (err) {
